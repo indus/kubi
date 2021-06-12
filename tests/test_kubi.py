@@ -64,15 +64,15 @@ def test_main_none_io(capsys):
     assert dst0.bands == 3
 
 def test_main_none_ii(capsys):
-    args = ['--ii', path_out + 'idx_none', path_in+'baseoverlay.tif', path_out+'baseoverlay_none.png']
+    args = ['--ii', path_out + 'idx_none', path_in+'base*.tif', path_out+'multi.png']
     print('\nargs:  '+' '.join(args))
     main(args)
     
-    dst_names = glob.glob(path_out+"*overlay_none*.png")
-    assert len(dst_names) == 6
+    dst_names = glob.glob(path_out+"*multi*.png")
+    assert len(dst_names) == 12
     dst0 = pyvips.Image.new_from_file(dst_names[0])
     assert dst0.width == dst0.height == 1024
-    assert dst0.bands == 4
+    assert dst0.bands == 3
 
 
 def test_main_none_inplace(capsys):
@@ -87,7 +87,7 @@ def test_main_none_inplace(capsys):
     assert dst0.width == dst0.height == 256
 
 def test_main_none_sub(capsys):
-    args = ['-s', '256', '-t', 'optan', path_out+'bm.tif', path_out+'sub/warped.png']
+    args = ['-s', '256', '-t', 'otc', path_out+'bm.tif', path_out+'sub/warped.png']
     print('\nargs:  '+' '.join(args))
     main(args)
     
@@ -137,7 +137,7 @@ def test_main_crossL(capsys):
     assert dst0.width == 1024 * 4 and dst0.height == 1024 * 3
 
 def test_main_crossR(capsys):
-    args = ['-l','crossR','-t','optan', path_in+'basemap.tif', path_out+'basemap_crossR.png']
+    args = ['-l','crossR','-t','otc', path_in+'basemap.tif', path_out+'basemap_crossR.png']
     print('\nargs:  '+' '.join(args))
     main(args)
 

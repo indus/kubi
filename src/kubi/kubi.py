@@ -7,9 +7,14 @@ import argparse
 import logging
 import sys
 import os
+import platform
 import glob
 import numpy as np
 from numpy import pi
+
+IsWin = platform.system() == 'Windows'
+if not IsWin:
+    import pyvips
 
 from kubi import __version__
 
@@ -28,28 +33,29 @@ _logger = logging.getLogger(__name__)
 
 
 def kubi(args):
-    os.environ['PATH'] =  'C:/Program Files/vips-dev-8.10/bin' + ';' + os.environ['PATH']
 
-    if args.vips:
-        os.environ['PATH'] = args.vips + ';' + os.environ['PATH']
-    
-    import pyvips
+    if IsWin:
+        if args.vips:
+            os.environ['PATH'] = args.vips + ';' + os.environ['PATH']
+        import pyvips
     
     src_names = None
+    if args.src:
+        src_names = glob.glob(args.src,recursive=True)
+        src_count = len(src_names)
+        src_multi = src_count > 1
+
+        if src_count == 0:
+            print(f'{args.src}: No such file or directory')
+            return
+
     if args.ii == None:
         _logger.info('Generating index')
 
         size = -1
         if args.size:
             size = args.size
-        elif args.src:
-            src_names = glob.glob(args.src,recursive=True)
-            src_count = len(src_names)
-            src_multi = src_count > 1
-
-            if src_count == 0:
-                print(f'{args.src}: No such file or directory')
-                return
+        elif src_names is not None:
             for name in src_names:
                 image = pyvips.Image.new_from_file(name)
                 size = max(size, int(image.width / 4))
@@ -100,7 +106,8 @@ def kubi(args):
                 index = None
                 idxA = idx
             else:
-                index = pyvips.Image.arrayjoin(idx, across=6 if args.layout == "row" else 1)
+                across = 6 if args.layout == "row" else 1
+                index = pyvips.Image.arrayjoin(idx, across = across)
         else:
             s0 = 0
             s1 = size
@@ -155,11 +162,17 @@ def kubi(args):
 
     idx = None
 
-    if args.src:
-        if src_names is None:
-            src_names = glob.glob(args.src, recursive=True)
-            src_count = len(src_names)
-            src_multi = src_count > 1
+
+    if src_names is not None:
+
+# # # # has no effect on performance
+#
+#       if src_multi:
+#           if index is None:
+#               for f in range(6):
+#                   idxA[f] = idxA[f].copy_memory()
+#           else:
+#               index = index.copy_memory()
 
         dst_suffix = '_'+ args.transform
         dst_folder = dst_name = dst_ext = None 
@@ -196,7 +209,6 @@ def kubi(args):
             dst = f'{dst_folder}/{dst_name}{dst_suffix}'
         
             fac = img.width/4
-
             
             if index is None:
                 for f in range(6):
@@ -266,9 +278,11 @@ def parse_args(args):
     """)
     parser.add_argument('-f', '--facenames', metavar="<str>", nargs=6 ,help='suffixes for +X, -X, +Y, -Y, +Z, -Z (e.g. -n r l u d f b)')
     parser.add_argument('-co', dest='co', metavar='<NAME=VALUE>*', action='append',  help='create options (more info in the epilog)')
-    parser.add_argument('--vips', help='path to the VIPS bin directory (usefull if VIPS is not added to PATH; e.g. on Windows)')
     parser.add_argument('--io', dest='io', help='index file output', metavar='dstindex')
     parser.add_argument('--ii', dest='ii', help='index file input', metavar='srcindex')
+
+    if IsWin:
+        parser.add_argument('--vips', help='path to the VIPS bin directory (usefull if VIPS is not added to PATH)')
 
     args = parser.parse_args(args)
 
