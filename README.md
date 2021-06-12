@@ -99,8 +99,10 @@ If only a few cubemaps are needed, performance is probably of minor concern. But
 
 # Transforms
 In addition to regular cubemaps, two optimized mappings can be generated:
-- **Equi-Angular Cubemap (EAC)**; C.Brown (2017): [Bringing pixels front and center in VR video](https://blog.google/products/google-ar-vr/bringing-pixels-front-and-center-vr-video/) 
-- **Optimized Tangens Cubemap (OTC)**; M.Zucker & Y.Higashi (2018): [Cube-to-sphere Projections for Procedural Texturing and Beyond](http://jcgt.org/published/0007/02/01/paper.pdf) (Ch. 3.2 & Ch. 5)  
+- **Equi-Angular Cubemap (EAC)**   
+C.Brown (2017): [Bringing pixels front and center in VR video](https://blog.google/products/google-ar-vr/bringing-pixels-front-and-center-vr-video/) 
+- **Optimized Tangens Cubemap (OTC)**   
+M.Zucker & Y.Higashi (2018): [Cube-to-sphere Projections for Procedural Texturing and Beyond](http://jcgt.org/published/0007/02/01/paper.pdf) (Ch. 3.2 & Ch. 5)  
 
 Both transforms significantly reduce the distortion of the cubemap and thus optimize the pixel yield. However, support in other tools and libraries is rather scarce.
 
