@@ -1,4 +1,4 @@
-# ![kubi_logo](./img/kubi_logo.png | width=117)
+![kubi_logo](./img/kubi_logo.png)
 
 **kubi** is a fast and flexible cubemap generator based on [libvips](https://libvips.github.io/libvips/)
 
