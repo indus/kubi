@@ -1,4 +1,4 @@
-![kubi_logo](./img/kubi_logo.png)
+<img width="117" alt="kubi logo" src="./img/kubi_logo.png">
 
 **kubi** is a fast and flexible cubemap generator based on [libvips](https://libvips.github.io/libvips/)
 
@@ -17,27 +17,25 @@ pip install git+https://github.com/indus/kubi.git
 When used with a glob pattern for multiple input files, **kubi** generates an [index file](https://libvips.github.io/libvips/API/current/libvips-resample.html#vips-mapim) once and reuses it while processing all found images. This can lead to a [significant speedup](#multiple-input-files). 
 
 ## Usage
-### all options
+* ### all options
 ``` shell
 kubi -h
 ```
 
-### basic usage
+* ### basic usage
 ``` shell
 kubi [-s <size>] [-l {row,column,crossL,crossR,crossH}] srcfile [dstfile]
 ```
 
-#### Layouts
-
-| none   | row    | column |
+| **none**   | **row**    | **column** |
 | :---:  | :---:  | :---:  |
 | ![none](./img/kubi_layouts_none.png "none") | ![row](./img/kubi_layouts_row.png "row") | ![column](./img/kubi_layouts_column.png "column") |
 
 | ![crossL](./img/kubi_layouts_crossL.png "crossL") | ![crossR](./img/kubi_layouts_crossR.png "crossR") | ![crossH](./img/kubi_layouts_crossH.png "crossH") |
 | :---:  | :---:  | :---:  |
-| crossL | crossR | crossH |
+| **crossL** | **crossR** | **crossH** |
 
-### tiled cubemaps
+* ### tiled cubemaps
 ``` shell
 kubi -s 2048 -co tile_size=512 -co depth=onetile -co overlap=0 -co layout=google -co suffix=.jpg[Q=75] -n l r u d f b srcfile dstfile.dz
 ```
@@ -97,7 +95,7 @@ If only a few cubemaps are needed, performance is probably of minor concern. But
 | 10 | 9.9s  | 1.0s |
 | 20 | 18.5s | 0.9s |
 
-# Transforms
+## Transforms
 In addition to regular cubemaps, two optimized mappings can be generated:
 - **Equi-Angular Cubemap (EAC)**   
 C.Brown (2017): [Bringing pixels front and center in VR video](https://blog.google/products/google-ar-vr/bringing-pixels-front-and-center-vr-video/) 
@@ -106,7 +104,7 @@ M.Zucker & Y.Higashi (2018): [Cube-to-sphere Projections for Procedural Texturin
 
 Both transforms significantly reduce the distortion of the cubemap and thus optimize the pixel yield. However, support in other tools and libraries is rather scarce.
 
-| deviation  | ltr: regular cubemap, EAC, OTC  |
+| error  | ltr: regular cubemap, EAC, OTC |
 | :---:  | :---:  |
 | area | ![error_area](./img/error_area.png "error_area") 
 | distance | ![error_distance](./img/error_distance.png "error_distance") 
