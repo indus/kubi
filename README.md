@@ -67,8 +67,8 @@ Marzipano.ImageUrlSource.fromString("<some_path>/dstfile_{f}/{z}/{y}/{x}.jpg");
 
 | face size | 1024px | 2048px | 4096px |
 | ---| --- | --- | --- |
-| kubi                                                   | 0.9s | 1.7s | 4.9s  |
-| [py360convert](https://pypi.org/project/py360convert/) | 2.5s | 8.7s | 33.0s |
+| kubi                                                   | 0.9s | 1.6s | 4.7s  |
+| [py360convert](https://pypi.org/project/py360convert/) | 2.6s | 8.6s | 32.2s |
 | *any others ?* | - | - | - |
 
 ### single input file - tiled output 
@@ -77,8 +77,8 @@ Marzipano.ImageUrlSource.fromString("<some_path>/dstfile_{f}/{z}/{y}/{x}.jpg");
 
 | face size | 1024px | 2048px | 4096px |
 | ---| --- | --- | --- |
-| kubi                                                   | 0.9s | 1.4s | 3.5s  |
-| [panorama_windows.exe](https://github.com/blackironj/panorama) | 1.4s | 4.4s | 16.8s |
+| kubi                                                   | 0.9s | 1.3s | 3.1s  |
+| [panorama_windows.exe](https://github.com/blackironj/panorama) | 1.5s | 4.7s | 16.9s |
 | *any others ?* | - | - | - |
 
 ### multiple input files

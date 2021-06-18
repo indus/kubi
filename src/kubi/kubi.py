@@ -31,7 +31,6 @@ _logger = logging.getLogger(__name__)
 # `from kubi.kubi import kubi`,
 # when using this Python module as a library.
 
-
 def kubi(args):
 
     if IsWin:
@@ -70,32 +69,33 @@ def kubi(args):
         elif args.transform == "otc": # M.Zucker & Y.Higashi (2018): Cube-to-sphere Projections for Procedural Texturing and Beyond
             ls = np.tan(ls * 0.8687) / np.tan(0.8687)
 
-        xv,yv = np.meshgrid(ls, ls)
+        xv,yv = np.meshgrid(ls, ls, copy=False)
 
-        xv2 = xv ** 2
-        yv2 = yv ** 2
- 
-        idx = np.stack([
-            np.arctan(xv),                      #tha0
-            np.arctan2(yv, np.sqrt(1 + xv2)),   #phi0
-            np.arctan2(xv, yv),                 #tha1
-            np.arctan2(1, np.sqrt(yv2 + xv2))   #phi1
-        ], axis=-1) 
-    
+        x0 = np.arctan(xv)
+        y0 = np.arctan2(yv, np.hypot(1,xv))
+        x1 = np.arctan2(xv, yv)
+        y1 = np.arctan(np.hypot(yv,xv))
+
+        ls = xv = yv = None
+
+        piot = pi/2
+
+        x0 = pyvips.Image.new_from_memory(x0.ravel(), size, size, 1, 'float') / piot
+        y0 = pyvips.Image.new_from_memory(y0.ravel(), size, size, 1, 'float') / piot
+        x1 = pyvips.Image.new_from_memory(x1.ravel(), size, size, 1, 'float') / piot
+        y1 = pyvips.Image.new_from_memory(y1.ravel(), size, size, 1, 'float') / piot
+
         ### end of numpy
 
-        ls = xv = yv = xv2 = yv2 = None
-        
-        idx = pyvips.Image.new_from_memory(idx.reshape(size**2 * 4), size, size, 4, 'float') / (pi/2)
-
         idx = [
-            pyvips.Image.bandjoin(idx[0]+3,idx[1]+1),
-            pyvips.Image.bandjoin(idx[0]+1,idx[1]+1),
-            pyvips.Image.bandjoin((idx[2]-2)%4,1-idx[3]),
-            pyvips.Image.bandjoin((4-idx[2])%4,1+idx[3]),
-            pyvips.Image.bandjoin(idx[0]+2,idx[1]+1),
-            pyvips.Image.bandjoin(idx[0]%4,idx[1]+1),
+            pyvips.Image.bandjoin(x0+3,y0+1),
+            pyvips.Image.bandjoin(x0+1,y0+1),
+            pyvips.Image.bandjoin((x1-2)%4,y1),
+            pyvips.Image.bandjoin((4-x1)%4,2-y1),
+            pyvips.Image.bandjoin(x0+2,y0+1),
+            pyvips.Image.bandjoin(x0%4,y0+1),
         ]
+    
 
         if args.layout is None or args.layout in ("column","row"):
             if args.inverse is not None:

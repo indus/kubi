@@ -56,3 +56,4 @@ docs
 htmlcov
 tests/in
 tests/out
+src/kubi/kubi_.py
