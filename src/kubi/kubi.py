@@ -65,7 +65,7 @@ def kubi(args):
         ls = np.linspace(-1, 1, size, dtype="f4", endpoint=False)
     
         if args.transform == "eac": # C.Brown (2017): Bringing pixels front and center in VR video
-            ls = np.tan(ls / 4 * pi)
+            ls = np.tan(ls / (4 / pi))
         elif args.transform == "otc": # M.Zucker & Y.Higashi (2018): Cube-to-sphere Projections for Procedural Texturing and Beyond
             ls = np.tan(ls * 0.8687) / np.tan(0.8687)
 
