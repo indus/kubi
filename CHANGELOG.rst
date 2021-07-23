@@ -2,6 +2,12 @@
 Changelog
 =========
 
+Version 0.1.3
+===========
+
+- fixed eac
+- Basic tests passed (97% coverage | 194run | 0 missing | 4 excluded | 8 partial)
+
 Version 0.1.2
 ===========
 
