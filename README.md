@@ -108,3 +108,16 @@ Both transforms significantly reduce the distortion of the cubemap and thus opti
 | :---:  | :---:  |
 | area | ![error_area](./img/error_area.png "error_area") 
 | distance | ![error_distance](./img/error_distance.png "error_distance") 
+
+To ensure the correct representation of a transformed cubemap, the reverse transformation must be performed at some point. The following example shows this for the OTC transformation in a fragment shader.
+``` GLSL
+//FRAGMENT SHADER for OTC
+
+vec3 n = vNormal.xyz; // or vPosition
+
+n /= max(max(abs(n.x),abs(n.y)),abs(n.z));
+n = atan(n * tan(0.8687));
+
+gl_FragColor = textureCube(otcSampler, n);
+
+```
