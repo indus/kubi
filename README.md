@@ -14,7 +14,7 @@ pip install git+https://github.com/indus/kubi.git
 ## Description
 
 **kubi** can convert equirectangular images into a variety of common [layouts](#layouts). All image formats supported by vips (JPEG, PNG, TIFF, WEBP, HEIF, ...) can be used for input and output. With the [DZ format](https://libvips.github.io/libvips/API/current/Making-image-pyramids.md.html) of libvips it is even possible to [create tiled images](#tiled-cubemaps) of the cubefaces.   
-When used with a glob pattern for multiple input files, **kubi** generates an [index file](https://libvips.github.io/libvips/API/current/libvips-resample.html#vips-mapim) once and reuses it while processing all found images. This can lead to a [significant speedup](#multiple-input-files). 
+When used with a glob pattern for multiple input files, **kubi** generates an [index file](https://libvips.github.io/libvips/API/current/libvips-resample.html#vips-mapim) once and reuses it while processing all matched images. This can lead to a [significant speedup](#multiple-input-files). 
 
 ## Usage
 * ### all options
