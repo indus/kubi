@@ -109,7 +109,7 @@ Both transforms significantly reduce the distortion of the cubemap and thus opti
 | area | ![error_area](./img/error_area.png "error_area") 
 | distance | ![error_distance](./img/error_distance.png "error_distance") 
 
-To ensure the correct representation of a transformed cubemap, the reverse transformation must be performed at some point. The following example shows this for the OTC transformation in a fragment shader.
+To ensure the correct representation of a transformed cubemap, the reverse transformation must be performed at some point. The following example shows this for the [OTC transformation](https://github.com/indus/kubi/blob/main/src/kubi/kubi.py#L70) in a fragment shader.
 ``` GLSL
 //FRAGMENT SHADER for OTC
 
