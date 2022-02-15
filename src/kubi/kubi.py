@@ -276,7 +276,7 @@ def parse_args(args):
       nohalo: edge sharpening resampler with halo reduction;
       vsqbs: B-Splines with antialiasing smoothing
     """)
-    parser.add_argument('-f', '--facenames', metavar="<str>", nargs=6 ,help='suffixes for +X, -X, +Y, -Y, +Z, -Z (e.g. -n r l u d f b)')
+    parser.add_argument('-f', '--facenames', metavar="<str>", nargs=6 ,help='suffixes for +X, -X, +Y, -Y, +Z, -Z (e.g. -f r l u d f b)')
     parser.add_argument('-co', dest='co', metavar='<NAME=VALUE>*', action='append',  help='create options (more info in the epilog)')
     parser.add_argument('--io', dest='io', help='index file output', metavar='dstindex')
     parser.add_argument('--ii', dest='ii', help='index file input', metavar='srcindex')
