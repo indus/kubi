@@ -14,7 +14,7 @@ from numpy import pi
 
 IsWin = platform.system() == 'Windows'
 
-from kubi import __version__
+__version__ = '0.1.4'
 
 __author__ = "Keim, Stefan"
 __copyright__ = "Keim, Stefan"
@@ -34,7 +34,7 @@ def kubi(args):
     if IsWin:
         if args.vips:
             os.environ['PATH'] = args.vips + ';' + os.environ['PATH']
-            
+
     import pyvips
     
     src_names = None
