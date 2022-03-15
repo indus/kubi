@@ -13,8 +13,6 @@ import numpy as np
 from numpy import pi
 
 IsWin = platform.system() == 'Windows'
-if not IsWin:
-    import pyvips
 
 from kubi import __version__
 
@@ -36,7 +34,8 @@ def kubi(args):
     if IsWin:
         if args.vips:
             os.environ['PATH'] = args.vips + ';' + os.environ['PATH']
-        import pyvips
+            
+    import pyvips
     
     src_names = None
     if args.src:
