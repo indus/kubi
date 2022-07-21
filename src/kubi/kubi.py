@@ -61,7 +61,9 @@ def kubi(args):
 
         ### TODO replace numpy with vips
 
-        ls = np.linspace(-1, 1, size, dtype="f4", endpoint=False)
+        ls, step = np.linspace(-1, 1, size, dtype="f4", endpoint=False, retstep=True)
+        view = ls.reshape(1, size)
+        view += step/2
     
         if args.transform == "eac": # C.Brown (2017): Bringing pixels front and center in VR video
             ls = np.tan(ls / (4 / pi))
@@ -75,7 +77,7 @@ def kubi(args):
         x1 = np.arctan2(xv, yv)
         y1 = np.arctan(np.hypot(yv,xv))
 
-        ls = xv = yv = None
+        ls = view = xv = yv = None
 
         piot = pi/2
 
