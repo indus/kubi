@@ -96,7 +96,7 @@ def kubi(args):
         ]
     
 
-        if args.layout is None or args.layout in ("column","row"):
+        if args.layout is None or args.layout in ("column","row", "nvidia"):
             if args.inverse is not None:
                 for f in range(6):
                     idx[f] = idx[f].rot180() if args.inverse == 'both' else idx[f].flip(args.inverse)
@@ -105,7 +105,15 @@ def kubi(args):
                 index = None
                 idxA = idx
             else:
-                across = 6 if args.layout == "row" else 1
+                across = 1 if args.layout == "column" else 6
+                if (args.layout == "nvidia"):
+                    tmp = idx.copy();
+                    idx[0] = tmp[0].rot270()
+                    idx[1] = tmp[1].rot90()
+                    idx[2] = tmp[5].rot180()
+                    idx[3] = tmp[4]
+                    idx[4] = tmp[2]
+                    idx[5] = tmp[3].rot180()
                 index = pyvips.Image.arrayjoin(idx, across = across)
         else:
             s0 = 0
@@ -259,13 +267,14 @@ def parse_args(args):
       optan: optimized tangent transform
     """)
     parser.add_argument('-i', '--inverse', choices=['horizontal', 'vertical', 'both'], help="flips the idx")
-    parser.add_argument('-l', '--layout ', dest="layout", choices=['row', 'column', 'crossL', 'crossR', 'crossH'], help="""
+    parser.add_argument('-l', '--layout ', dest="layout", choices=['row', 'column', 'crossL', 'crossR', 'crossH', 'nvidia'], help="""
       none: seperate faces (default);
       row: +X,-X,+Y,-Y,+Z,-Z;
       column: +X,-X,+Y,-Y,+Z,-Z;
       crossL: vertical cross with +Y,-Y on the left;
       crossR: vertical cross with +Y,-Y on the right;
       crossH: horizontal cross;
+      nvidia: +X (90 deg ccw) -X (90 deg cw) +Y (180 deg) -Y +Z -Z;
     """)
     parser.add_argument('-r', '--resample', default='bilinear', choices=['nearest', 'bilinear', 'bicubic', 'lbb', 'nohalo', 'vsqbs'], help="""
       nearest: nearest-neighbour interpolation;
