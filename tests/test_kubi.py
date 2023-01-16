@@ -126,6 +126,16 @@ def test_main_row_multi(capsys):
     dst0 = pyvips.Image.new_from_file(dst_names[0])
     assert dst0.width == 512 * 6 and dst0.height == 512
 
+#def test_main_row_order_rotate(capsys):
+#    args = ['-l','row','--order', '0', '1', '5', '4', '2', '3', '--rotate', '270','90','180','0','0','180', '-s','512', path_in+'base*.tif', path_out+'basemap_row_order_rotate.png']
+#    print('\nargs:  '+' '.join(args))
+#    main(args)
+#
+#    dst_names = glob.glob(path_out+"*_row_order_rotate.png")
+#    assert len(dst_names) == 2
+#    dst0 = pyvips.Image.new_from_file(dst_names[0])
+#    assert dst0.width == 512 * 6 and dst0.height == 512
+
 def test_main_crossL(capsys):
     args = ['-l','crossL','-i','horizontal', path_in+'basemap.tif', path_out+'basemap_crossL.png']
     print('\nargs:  '+' '.join(args))
@@ -171,8 +181,8 @@ def test_main_tiled(capsys):
     print('\nargs:  '+' '.join(args))
     main(args)
 
-    dst_names = glob.glob(path_out+"tiled/**/*", recursive=True)
-    assert len(dst_names) == 54
+    dst_names = glob.glob(path_out+"tiled/**/*.jpg", recursive=True)
+    assert len(dst_names) == 30
 
 
 

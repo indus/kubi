@@ -2,6 +2,13 @@
 Changelog
 =========
 
+Version 0.1.5
+===========
+
+- added 'order' option
+- added 'rotate' option
+- Basic tests passed (97% coverage | 204run | 0 missing | 4 excluded | 8 partial)
+
 Version 0.1.4
 ===========
 

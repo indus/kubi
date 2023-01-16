@@ -14,7 +14,7 @@ from numpy import pi
 
 IsWin = platform.system() == 'Windows'
 
-__version__ = '0.1.4'
+__version__ = '0.1.5'
 
 __author__ = "Keim, Stefan"
 __copyright__ = "Keim, Stefan"
@@ -94,7 +94,17 @@ def kubi(args):
             pyvips.Image.bandjoin(x0+2,y0+1),
             pyvips.Image.bandjoin(x0%4,y0+1),
         ]
-    
+
+        if args.order:
+            tmp = idx.copy()
+            for i in range(0, 6):
+                idx[i] = tmp[args.order[i]]
+            tmp = None
+
+        if args.rotate:
+            for i in range(0, 6):
+                idx[i] = idx[i].rot(f'd{args.rotate[i]}')
+            
 
         if args.layout is None or args.layout in ("column","row"):
             if args.inverse is not None:
@@ -275,6 +285,8 @@ def parse_args(args):
       nohalo: edge sharpening resampler with halo reduction;
       vsqbs: B-Splines with antialiasing smoothing
     """)
+    parser.add_argument('--order', dest="order", metavar='<int>', nargs=6, type=int, help="tile order for +X, -X, +Y, -Y, +Z, -Z")
+    parser.add_argument('--rotate', dest="rotate", metavar='<int>', nargs=6, type=int, choices=[0, 90, 180, 270], help="tile rotation for +X, -X, +Y, -Y, +Z, -Z")
     parser.add_argument('-f', '--facenames', metavar="<str>", nargs=6 ,help='suffixes for +X, -X, +Y, -Y, +Z, -Z (e.g. -f r l u d f b)')
     parser.add_argument('-co', dest='co', metavar='<NAME=VALUE>*', action='append',  help='create options (more info in the epilog)')
     parser.add_argument('--io', dest='io', help='index file output', metavar='dstindex')
