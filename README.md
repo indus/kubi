@@ -37,7 +37,7 @@ kubi [-s <size>] [-l {row,column,crossL,crossR,crossH}] srcfile [dstfile]
 
 * ### tiled cubemaps
 ``` shell
-kubi -s 2048 -co tile_size=512 -co depth=onetile -co overlap=0 -co layout=google -co suffix=.jpg[Q=75] -f l r u d f b srcfile dstfile.dz
+kubi -s 2048 -co tile_size=512 -co depth=onetile -co overlap=0 -co layout=google -co suffix=.jpg[Q=75] -f r l u d f b srcfile dstfile.dz
 ```
 | argument | explanation |
 | :--- | :--- |
