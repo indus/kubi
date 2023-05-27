@@ -55,7 +55,11 @@ def kubi(args):
             size = args.size
         elif src_names is not None:
             for name in src_names:
-                image = pyvips.Image.new_from_file(name)
+                try:
+                    image = pyvips.Image.new_from_file(name)
+                except Exception:
+                    print("Input file '{}' isn't readable, exiting!".format(name))
+                    sys.exit(1)
                 size = max(size, int(image.width / 4))
 
 
@@ -224,7 +228,12 @@ def kubi(args):
                     idx = idxA[f]*fac
                     fn = args.facenames[f] if args.facenames is not None else str(f)
                     mapim = img.mapim(idx, interpolate=interp)
-                    mapim.write_to_file(f'{dst}_{fn}{dst_ext}', **args.co)
+                    try:
+                        mapim.write_to_file(f'{dst}_{fn}{dst_ext}', **args.co)
+                    except Exception:
+                        if 'layout' in args.co:
+                            print("You might have missed to add the '.dz' suffix to generate image pyramids, exiting!")
+                            sys.exit(2)
             else:
                 idx = index*fac
                 mapim = img.mapim(idx, interpolate=interp)
