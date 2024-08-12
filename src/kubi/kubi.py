@@ -14,7 +14,7 @@ from numpy import pi
 
 IsWin = platform.system() == 'Windows'
 
-__version__ = '0.1.5'
+__version__ = '0.1.6'
 
 __author__ = "Keim, Stefan"
 __copyright__ = "Keim, Stefan"
@@ -223,11 +223,11 @@ def kubi(args):
                 for f in range(6):
                     idx = idxA[f]*fac
                     fn = args.facenames[f] if args.facenames is not None else str(f)
-                    mapim = img.mapim(idx, interpolate=interp)
+                    mapim = img.mapim(idx, interpolate=interp, extend="repeat")
                     mapim.write_to_file(f'{dst}_{fn}{dst_ext}', **args.co)
             else:
                 idx = index*fac
-                mapim = img.mapim(idx, interpolate=interp)
+                mapim = img.mapim(idx, interpolate=interp, extend="repeat")
                 mapim.write_to_file(f'{dst}{dst_ext}', **args.co)
                 
 
